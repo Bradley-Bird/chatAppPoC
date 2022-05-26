@@ -7,7 +7,7 @@ const AuthProvider = ({ children }) => {
   const [password, setPassword] = useState('');
   const [type, setType] = useState('sign-in');
   const [error, setError] = useState('');
-  const [userName, setUserName] = useState('');
+  const [username, setusername] = useState('');
   return (
     <AuthContext.Provider
       value={{
@@ -19,8 +19,8 @@ const AuthProvider = ({ children }) => {
         setType,
         error,
         setError,
-        userName,
-        setUserName,
+        username,
+        setusername,
       }}
     >
       {children}

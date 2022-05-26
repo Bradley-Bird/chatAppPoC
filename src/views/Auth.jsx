@@ -16,8 +16,8 @@ export default function Login() {
     setType,
     error,
     setError,
-    userName,
-    setUserName,
+    username,
+    setusername,
   } = useAuthContext();
 
   const handleSubmit = async (e) => {
@@ -28,7 +28,7 @@ export default function Login() {
         setCurrentUser(data);
         history.push('/');
       } else {
-        const data = await signUpUser({ email, password });
+        const data = await signUpUser({ email, password }, username);
         setCurrentUser(data);
         history.push('/');
       }
@@ -72,13 +72,13 @@ export default function Login() {
               autoComplete="on"
               onChange={(e) => setPassword(e.target.value)}
             />
-            UserName:
+            username:
             <input
               type="username"
               placeholder="username"
-              value={userName}
+              value={username}
               autoComplete="on"
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={(e) => setusername(e.target.value)}
             />
           </label>
           <button>Enter</button>
