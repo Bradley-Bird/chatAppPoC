@@ -11,7 +11,6 @@ import {
 function Main() {
   const [messages, setMessages] = useState([]);
   const { user } = useUserContext();
-
   const [post, setPost] = useState('');
   const handleChange = (e) => {
     setPost(e.target.value);
@@ -19,7 +18,8 @@ function Main() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await postMessage(post, user.id);
+    await postMessage(post, user.id);
+    setPost('');
   };
 
   const handleMessageReceived = (message) => {
@@ -30,6 +30,7 @@ function Main() {
     fetchMessages().then(setMessages);
 
     subscribe(handleMessageReceived);
+
     return () => unsubscribe();
   }, []);
 

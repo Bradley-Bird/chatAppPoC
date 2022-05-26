@@ -1,4 +1,3 @@
-import { getUser } from './auth';
 import { client, parseData } from './client';
 
 export async function fetchMessages() {
@@ -14,14 +13,14 @@ export async function postMessage(post, id) {
 }
 
 export function subscribe(onPost = (_post) => {}) {
-  const messageService = client
+  const resp = client
     .from('messages')
-    .on('INSERT', (payload) => {
-      console.log('Post Posted!', payload);
-      onPost(payload.new);
+    .on('*', (message) => {
+      console.log('Post Posted!', message);
+      onPost(message.new);
     })
     .subscribe();
-  return parseData(messageService);
+  return resp;
 }
 
 export function unsubscribe() {
