@@ -1,28 +1,50 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useUserContext } from '../context/UserContext';
-import { postMessage } from '../services/messages';
+import {
+  fetchMessages,
+  postMessage,
+  subscribe,
+  unsubscribe,
+} from '../services/messages';
 
 function Main() {
-  const {user} = useUserContext();
-  console.log(user);
-const [post, setPost] = useState('')
-const handleChange= (e) => {
-setPost(e.target.value)};
+  const [messages, setMessages] = useState([]);
+  const { user } = useUserContext();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const resp = await postMessage(post, user.id);
-  console.log('handlesubmit',resp);
-}
+  const [post, setPost] = useState('');
+  const handleChange = (e) => {
+    setPost(e.target.value);
+  };
 
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const resp = await postMessage(post, user.id);
+  };
 
-  return ( 
-  <>
-  <form onSubmit={handleSubmit}><input type='text' value={post} onChange={handleChange}/>
-  <button>Submit</button>
-  </form>
-  </>
+  const handleMessageReceived = (message) => {
+    setMessages((prevMessages) => [message, ...prevMessages]);
+  };
+
+  useEffect(() => {
+    fetchMessages().then(setMessages);
+
+    subscribe(handleMessageReceived);
+    return () => unsubscribe();
+  }, []);
+
+  return (
+    <>
+      <div>
+        {messages.map(({ id, posts }) => (
+          <p key={id}>{posts}</p>
+        ))}
+      </div>
+      <form onSubmit={handleSubmit}>
+        <input type="text" value={post} onChange={handleChange} />
+        <button>Submit</button>
+      </form>
+    </>
   );
 }
 

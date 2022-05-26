@@ -2,17 +2,14 @@ import { getUser } from './auth';
 import { client, parseData } from './client';
 
 export async function fetchMessages() {
-  const resp = await client
-  .from('messages')
-  .select();
+  const resp = await client.from('messages').select();
   return parseData(resp);
 }
 
 export async function postMessage(post, id) {
-  console.log(id);
   const resp = await client
-  .from('messages')
-  .insert({ posts: post, profile_id: id });
+    .from('messages')
+    .insert({ posts: post, profile_id: id });
   return parseData(resp);
 }
 
