@@ -1,7 +1,7 @@
-import { client, checkError } from './client';
+import { client, parseData } from './client';
 
 export function getUser() {
-  return client.auth.session() && client.auth.session().user.email;
+  return client.auth.user();
 }
 
 export async function signUpUser({ email, password }, username) {
@@ -25,5 +25,5 @@ export async function signInUser(email, password) {
 
 export async function logout() {
   const response = await client.auth.signOut();
-  return checkError(response);
+  return parseData(response);
 }

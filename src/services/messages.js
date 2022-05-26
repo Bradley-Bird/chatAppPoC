@@ -1,19 +1,24 @@
+import { getUser } from './auth';
 import { client, parseData } from './client';
 
 export async function fetchMessages() {
-  const resp = await client.from().select();
+  const resp = await client
+  .from('messages')
+  .select();
   return parseData(resp);
 }
 
-export async function postMessage(email, status = 0) {
-  if (!email) throw new Error('Please sign in to post.');
-  const resp = await client.from('posts').insert({ email, status });
+export async function postMessage(post, id) {
+  console.log(id);
+  const resp = await client
+  .from('messages')
+  .insert({ posts: post, profile_id: id });
   return parseData(resp);
 }
 
 export function subscribe(onPost = (_post) => {}) {
   const messageService = client
-    .from('posts')
+    .from('messages')
     .on('INSERT', (payload) => {
       console.log('Post Posted!', payload);
       onPost(payload.new);

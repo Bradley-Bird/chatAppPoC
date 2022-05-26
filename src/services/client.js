@@ -4,7 +4,7 @@ export const client = createClient(
   process.env.SUPABASE_KEY
 );
 
-export function checkError({ data, error }) {
+export function parseData({ data, error }) {
   if (error) {
     throw error;
   }

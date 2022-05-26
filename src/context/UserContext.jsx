@@ -8,7 +8,7 @@ const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(user || { email: null });
 
   return (
-    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+    <UserContext.Provider value={{ currentUser, setCurrentUser, user }}>
       {children}
     </UserContext.Provider>
   );
