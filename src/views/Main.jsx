@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useUserContext } from '../context/UserContext';
+import { logout } from '../services/auth';
 import {
   fetchMessages,
   postMessage,
   subscribe,
   unsubscribe,
 } from '../services/messages';
+import Friends from './Friends';
 
 function Main() {
+  const history = useHistory();
   const [messages, setMessages] = useState([]);
   const { user } = useUserContext();
   const [post, setPost] = useState('');
@@ -25,6 +29,11 @@ function Main() {
     setMessages((prevMessages) => [...prevMessages, message]);
   };
 
+  const handleLogOut = () => {
+    logout();
+    history.push('/auth');
+  };
+
   useEffect(() => {
     fetchMessages().then(setMessages);
 
@@ -34,7 +43,8 @@ function Main() {
   }, []);
 
   return (
-    <>
+    <div>
+      <button onClick={handleLogOut}>LogOut</button>
       <div>
         {messages.map(({ id, posts }) => (
           <p key={id}>{posts}</p>
@@ -44,7 +54,8 @@ function Main() {
         <input type="text" value={post} onChange={handleChange} />
         <button>Submit</button>
       </form>
-    </>
+      <Friends />
+    </div>
   );
 }
 
