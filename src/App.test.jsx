@@ -4,7 +4,7 @@ import Main from './views/Main';
 
 describe('example test', () => {
   it('first test', async () => {
-    render (<UserProvider> <Main/>
+   await render (<UserProvider> <Main/>
     </UserProvider>);
   });
 });
