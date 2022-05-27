@@ -6,6 +6,7 @@ import {
   subscribe,
   unsubscribe,
 } from '../services/messages';
+import Friends from './Friends';
 
 function Main() {
   const [messages, setMessages] = useState([]);
@@ -34,7 +35,7 @@ function Main() {
   }, []);
 
   return (
-    <>
+    <div>
       <div>
         {messages.map(({ id, posts }) => (
           <p key={id}>{posts}</p>
@@ -44,7 +45,8 @@ function Main() {
         <input type="text" value={post} onChange={handleChange} />
         <button>Submit</button>
       </form>
-    </>
+      <Friends />
+    </div>
   );
 }
 
