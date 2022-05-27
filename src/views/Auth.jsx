@@ -24,7 +24,8 @@ export default function Login() {
     e.preventDefault();
     try {
       if (type === 'sign-in') {
-        const data = await signInUser({ email, password });
+        const data = await signInUser(email, password);
+        console.log(data);
         setCurrentUser(data);
         history.push('/');
       } else {
