@@ -7,7 +7,8 @@ import Main from './views/Main';
 describe('example test', () => {
   it('first test', () => {
    render (<AuthProvider>
-   <UserProvider> <Main/>
+   <UserProvider>
+    <Main/>
     </UserProvider>
     </AuthProvider>);
   });
