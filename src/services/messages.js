@@ -1,7 +1,10 @@
 import { client, parseData } from './client';
 
 export async function fetchMessages() {
-  const resp = await client.from('messages').select();
+  const resp = await client
+    .from('messages')
+    .select()
+    .order('created_at', { descending: false });
   return parseData(resp);
 }
 
@@ -15,7 +18,7 @@ export async function postMessage(post, id) {
 export function subscribe(onPost = (_post) => {}) {
   const resp = client
     .from('messages')
-    .on('*', (message) => {
+    .on('INSERT', (message) => {
       console.log('Post Posted!', message);
       onPost(message.new);
     })

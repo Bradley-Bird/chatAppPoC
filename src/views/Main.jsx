@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserContext } from '../context/UserContext';
 import {
   fetchMessages,
@@ -23,7 +22,7 @@ function Main() {
   };
 
   const handleMessageReceived = (message) => {
-    setMessages((prevMessages) => [message, ...prevMessages]);
+    setMessages((prevMessages) => [...prevMessages, message]);
   };
 
   useEffect(() => {
